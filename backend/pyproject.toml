@@ -9,6 +9,7 @@ dependencies = [
     "pydantic[email]>=2.7",
     "pydantic-settings>=2.3",
     "sqlalchemy[asyncio]>=2.0",
+    "pgvector>=0.3",
     "asyncpg>=0.29",
     "psycopg[binary]>=3.2",
     "alembic>=1.13",

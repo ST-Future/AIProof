@@ -61,3 +61,56 @@ class PaymentStatus(StrEnum):
     succeeded = "succeeded"
     failed = "failed"
     refunded = "refunded"
+
+
+class SessionStatus(StrEnum):
+    started = "started"
+    completed = "completed"
+    abandoned = "abandoned"
+
+
+class KnowledgeStatus(StrEnum):
+    draft = "draft"
+    published = "published"
+    unpublished = "unpublished"
+    retired = "retired"
+
+
+class RuleStatus(StrEnum):
+    draft = "draft"
+    active = "active"
+    inactive = "inactive"
+
+
+class SalesTriggerMode(StrEnum):
+    allow = "allow"  # sales explanation / upsell permitted
+    block = "block"  # sales suppressed
+
+
+class PromptStatus(StrEnum):
+    draft = "draft"
+    published = "published"
+    archived = "archived"
+
+
+class RiskSeverity(StrEnum):
+    low = "low"
+    medium = "medium"
+    high = "high"
+
+
+class MessageRole(StrEnum):
+    user = "user"
+    assistant = "assistant"
+    system = "system"
+
+
+class RunStatus(StrEnum):
+    success = "success"
+    error = "error"
+    safe_default = "safe_default"  # rule/model failure → safe fallback flow
+
+
+class FeedbackSource(StrEnum):
+    user = "user"
+    admin = "admin"

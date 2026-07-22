@@ -44,6 +44,12 @@ alembic downgrade -1                            # roll back one
 
 Alembic reads `DATABASE_URL_SYNC` (sync driver) from settings; the app uses `DATABASE_URL` (async).
 
+## Seed reference data
+
+```bash
+python -m app.seed   # training stages, default system prompt, safety risk rules (idempotent)
+```
+
 ## Quality
 
 ```bash
