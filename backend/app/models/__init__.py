@@ -1,8 +1,12 @@
 """ORM models package.
 
-Concrete tables (users, memberships, knowledge_entries, ...) are added in
-Week 1 Tuesday/Wednesday. Importing this package makes all models visible to
-Alembic's autogenerate via ``app.db.Base.metadata``.
+Importing this package registers every model on ``app.db.Base.metadata`` so
+Alembic autogenerate (via ``target_metadata``) can see them.
 """
 
-from app.db import Base  # noqa: F401  (re-exported for Alembic target_metadata)
+from app.db import Base
+from app.models.membership import Membership
+from app.models.payment import PaymentRecord
+from app.models.user import User, UserIdentity
+
+__all__ = ["Base", "User", "UserIdentity", "Membership", "PaymentRecord"]

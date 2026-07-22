@@ -26,9 +26,7 @@ class Settings(BaseSettings):
     log_level: str = "info"
 
     # Database (PostgreSQL + pgvector; self-hosted / Docker)
-    database_url: str = (
-        "postgresql+asyncpg://postgres:postgres@localhost:5432/great_energy_field"
-    )
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/great_energy_field"
     database_url_sync: str = (
         "postgresql+psycopg://postgres:postgres@localhost:5432/great_energy_field"
     )
