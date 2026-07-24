@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     )
 
     # Auth (FastAPI-native JWT; the backend both issues and verifies tokens)
-    jwt_secret_key: str = "dev-insecure-change-me"
+    jwt_secret_key: str = "dev-insecure-change-me-please-set-a-real-32b-secret"
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 1440
 

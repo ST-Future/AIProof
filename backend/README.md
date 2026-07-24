@@ -50,6 +50,19 @@ Alembic reads `DATABASE_URL_SYNC` (sync driver) from settings; the app uses `DAT
 python -m app.seed   # training stages, default system prompt, safety risk rules (idempotent)
 ```
 
+## Create a founder/admin account
+
+```bash
+python -m app.create_admin <email> <password> [display_name]
+# creates a new admin, or promotes an existing email to admin (and resets its password)
+```
+
+## Auth
+
+FastAPI-native JWT. `POST /api/auth/signup` and `POST /api/auth/login` return a bearer token;
+`GET /api/auth/me` returns the current user. Admin routes (`/api/admin/*`) require an admin role
+via the `require_admin` dependency.
+
 ## Quality
 
 ```bash
