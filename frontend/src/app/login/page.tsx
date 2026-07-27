@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -38,6 +39,14 @@ export default function LoginPage() {
 
   return (
     <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 px-6 py-16">
+      <Image
+        src="/logo.png"
+        alt="Great Energy Field"
+        width={320}
+        height={213}
+        priority
+        className="mx-auto h-auto w-44"
+      />
       <div>
         <h1 className="text-2xl font-semibold">
           {mode === "login" ? "Sign in" : "Create your account"}

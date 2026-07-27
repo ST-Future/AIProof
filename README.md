@@ -3,8 +3,6 @@
 AI-guided wellness / energy-practice platform built around a **training-type AI Agent**
 (knowledge base + user state + rules engine + training plan engine + AI generation).
 
-See [development_plan.md](development_plan.md) for the full 6-week, two-milestone execution plan.
-
 ## Repository layout
 
 ```
@@ -39,9 +37,3 @@ npm run dev                                 # http://localhost:3000
 ```
 
 Per-app details: [backend/README.md](backend/README.md) · [frontend/README.md](frontend/README.md).
-
-## Status
-
-Week 1 — Monday complete: repo structure, FastAPI skeleton (`/health`, settings, async SQLAlchemy,
-Alembic, CORS), Next.js landing + `/admin` shell that reads live backend health. See the plan for
-the day-by-day roadmap.

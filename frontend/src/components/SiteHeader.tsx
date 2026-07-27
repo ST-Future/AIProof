@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -17,8 +18,19 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/70 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/70">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-        <Link href="/" className="text-sm font-semibold">
-          Great Energy Field
+        <Link href="/" className="group flex items-center gap-2">
+          <Image
+            src="/mark.png"
+            alt="Great Energy Field logo"
+            width={36}
+            height={36}
+            unoptimized
+            priority
+            className="h-9 w-9 object-contain"
+          />
+          <span className="text-base font-semibold tracking-tight text-emerald-600 transition-colors group-hover:text-emerald-700">
+            Great Energy Field
+          </span>
         </Link>
         <div className="flex items-center gap-4 text-sm">
           {loading ? null : user ? (

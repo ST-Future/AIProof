@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -176,46 +177,6 @@ const FAQ: { q: string; a: string }[] = [
 
 /* --------------------------------- pieces --------------------------------- */
 
-function EnergyField() {
-  return (
-    <div className="relative aspect-square w-full max-w-md">
-      <div
-        className="absolute inset-0 rounded-full blur-2xl"
-        style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(16,185,129,0.28), transparent)" }}
-      />
-      <svg viewBox="0 0 200 200" className="relative h-full w-full text-emerald-500">
-        <g
-          fill="none"
-          stroke="currentColor"
-          className="motion-safe:animate-pulse [animation-duration:5s]"
-        >
-          <circle cx="100" cy="100" r="88" strokeWidth="1" opacity="0.25" />
-          <circle cx="100" cy="100" r="66" strokeWidth="1.2" opacity="0.4" />
-          <circle cx="100" cy="100" r="44" strokeWidth="1.4" opacity="0.6" />
-        </g>
-        <circle cx="100" cy="100" r="24" fill="currentColor" opacity="0.12" />
-        <path
-          d="M88 100l8 8 18-20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-
-      <div className="absolute left-0 top-8 rounded-2xl border border-neutral-200 bg-white/90 px-3 py-2 text-xs shadow-sm backdrop-blur motion-safe:animate-bounce [animation-duration:3s] dark:border-neutral-800 dark:bg-neutral-900/90">
-        <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Breathing · 5 min
-      </div>
-      <div className="absolute bottom-10 right-0 rounded-2xl border border-neutral-200 bg-white/90 px-3 py-2 text-xs shadow-sm backdrop-blur motion-safe:animate-bounce [animation-delay:1.5s] [animation-duration:3s] dark:border-neutral-800 dark:bg-neutral-900/90">
-        <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-        Day 7 · stable
-      </div>
-    </div>
-  );
-}
-
 function SectionHeading({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
@@ -294,7 +255,29 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={150} className="flex justify-center lg:justify-end">
-            <EnergyField />
+            <div className="relative w-full max-w-md">
+              <div
+                className="pointer-events-none absolute -inset-6 rounded-[2.5rem] blur-2xl"
+                style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(16,185,129,0.25), transparent)" }}
+              />
+              <Image
+                src="/logo.png"
+                alt="Great Energy Field"
+                width={768}
+                height={512}
+                priority
+                sizes="(max-width: 1024px) 100vw, 448px"
+                className="relative h-auto w-full rounded-3xl shadow-xl ring-1 ring-emerald-200/50 dark:ring-emerald-900/40"
+              />
+              <div className="absolute left-0 top-8 rounded-2xl border border-neutral-200 bg-white/90 px-3 py-2 text-xs shadow-sm backdrop-blur motion-safe:animate-bounce [animation-duration:3s] dark:border-neutral-800 dark:bg-neutral-900/90">
+                <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                Breathing · 5 min
+              </div>
+              <div className="absolute bottom-8 right-0 rounded-2xl border border-neutral-200 bg-white/90 px-3 py-2 text-xs shadow-sm backdrop-blur motion-safe:animate-bounce [animation-delay:1.5s] [animation-duration:3s] dark:border-neutral-800 dark:bg-neutral-900/90">
+                <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                Day 7 · stable
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -521,7 +504,15 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-neutral-200 py-10 dark:border-neutral-800">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-neutral-500 sm:flex-row">
-          <span className="font-semibold text-neutral-700 dark:text-neutral-300">
+          <span className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-neutral-300">
+            <Image
+              src="/mark.png"
+              alt="Great Energy Field logo"
+              width={32}
+              height={32}
+              unoptimized
+              className="h-8 w-8 object-contain"
+            />
             Great Energy Field
           </span>
           <div className="flex gap-6">
