@@ -76,6 +76,12 @@ class KnowledgeStatus(StrEnum):
     retired = "retired"
 
 
+class InboxStatus(StrEnum):
+    new = "new"
+    promoted = "promoted"  # turned into a knowledge_entry
+    archived = "archived"
+
+
 class RuleStatus(StrEnum):
     draft = "draft"
     active = "active"

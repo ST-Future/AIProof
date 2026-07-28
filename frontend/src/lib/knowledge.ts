@@ -29,8 +29,21 @@ export interface KnowledgeInput {
 
 const BASE = "/api/admin/knowledge";
 
-export function listKnowledge(): Promise<KnowledgeEntry[]> {
-  return apiFetch<KnowledgeEntry[]>(BASE, { auth: true });
+export interface KnowledgeFilters {
+  status?: KnowledgeStatus;
+  category?: string;
+  q?: string;
+  tag?: string;
+}
+
+export function listKnowledge(filters: KnowledgeFilters = {}): Promise<KnowledgeEntry[]> {
+  const params = new URLSearchParams();
+  if (filters.status) params.set("status_filter", filters.status);
+  if (filters.category) params.set("category", filters.category);
+  if (filters.q) params.set("q", filters.q);
+  if (filters.tag) params.set("tag", filters.tag);
+  const qs = params.toString();
+  return apiFetch<KnowledgeEntry[]>(qs ? `${BASE}?${qs}` : BASE, { auth: true });
 }
 
 export function createKnowledge(input: KnowledgeInput): Promise<KnowledgeEntry> {

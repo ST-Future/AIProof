@@ -30,10 +30,15 @@ async def _get_or_404(db: AsyncSession, entry_id: uuid.UUID) -> KnowledgeEntry:
 @router.get("", response_model=list[KnowledgeRead])
 async def list_knowledge(
     status_filter: KnowledgeStatus | None = None,
+    category: str | None = None,
+    q: str | None = None,
+    tag: str | None = None,
     _: User = Depends(require_admin),
     db: AsyncSession = Depends(get_db),
 ) -> list[KnowledgeEntry]:
-    return list(await svc.list_entries(db, status=status_filter))
+    return list(
+        await svc.list_entries(db, status=status_filter, category=category, query=q, tag=tag)
+    )
 
 
 @router.post("", response_model=KnowledgeRead, status_code=status.HTTP_201_CREATED)

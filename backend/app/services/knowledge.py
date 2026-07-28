@@ -15,11 +15,24 @@ from app.services.audit import record_admin_action
 
 
 async def list_entries(
-    db: AsyncSession, *, status: KnowledgeStatus | None = None
+    db: AsyncSession,
+    *,
+    status: KnowledgeStatus | None = None,
+    category: str | None = None,
+    query: str | None = None,
+    tag: str | None = None,
 ) -> Sequence[KnowledgeEntry]:
     stmt = select(KnowledgeEntry).order_by(KnowledgeEntry.updated_at.desc())
     if status is not None:
         stmt = stmt.where(KnowledgeEntry.status == status)
+    if category:
+        stmt = stmt.where(KnowledgeEntry.category == category)
+    if query:
+        pattern = f"%{query}%"
+        stmt = stmt.where(KnowledgeEntry.title.ilike(pattern) | KnowledgeEntry.body.ilike(pattern))
+    if tag:
+        # JSONB array contains the given tag.
+        stmt = stmt.where(KnowledgeEntry.tags.contains([tag]))
     return (await db.execute(stmt)).scalars().all()
 
 

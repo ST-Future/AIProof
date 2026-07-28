@@ -8,7 +8,7 @@ from app.db import Base
 from app.models.admin import AdminAction
 from app.models.assessment import BackgroundAssessment, EnergyProfile
 from app.models.conversation import AgentRun, AiFeedback, Conversation, Message
-from app.models.knowledge import KnowledgeEmbedding, KnowledgeEntry
+from app.models.knowledge import KnowledgeEmbedding, KnowledgeEntry, KnowledgeInboxItem
 from app.models.membership import Membership
 from app.models.payment import PaymentRecord
 from app.models.rules import AgentRule, PromptVersion, RiskRule, SalesTrigger
@@ -38,6 +38,7 @@ __all__ = [
     # knowledge / RAG
     "KnowledgeEntry",
     "KnowledgeEmbedding",
+    "KnowledgeInboxItem",
     # decision layer
     "AgentRule",
     "SalesTrigger",

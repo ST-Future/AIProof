@@ -14,7 +14,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db import Base
 from app.models.base import TimestampMixin, uuid_pk
-from app.models.enums import AiLevel, KnowledgeStatus
+from app.models.enums import AiLevel, InboxStatus, KnowledgeStatus
 
 # OpenAI text-embedding-3-small dimensionality (Phase 1 default provider).
 EMBEDDING_DIM = 1536
@@ -62,3 +62,26 @@ class KnowledgeEmbedding(TimestampMixin, Base):
     meta: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
 
     entry: Mapped[KnowledgeEntry] = relationship(back_populates="embeddings")
+
+
+class KnowledgeInboxItem(TimestampMixin, Base):
+    """A quickly-captured raw founder note, later promoted to a knowledge entry."""
+
+    __tablename__ = "knowledge_inbox"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    title: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    status: Mapped[InboxStatus] = mapped_column(
+        SAEnum(InboxStatus, native_enum=False, length=20),
+        default=InboxStatus.new,
+        index=True,
+        nullable=False,
+    )
+    # Set once the note is promoted into a knowledge_entry.
+    promoted_entry_id: Mapped[uuid.UUID | None] = mapped_column(
+        PGUUID(as_uuid=True),
+        ForeignKey("knowledge_entries.id", ondelete="SET NULL"),
+        nullable=True,
+    )
