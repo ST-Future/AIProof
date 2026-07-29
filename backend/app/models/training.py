@@ -45,7 +45,8 @@ class TrainingModule(TimestampMixin, Base):
         PGUUID(as_uuid=True), ForeignKey("training_stages.id", ondelete="SET NULL"), nullable=True
     )
     goal: Mapped[str | None] = mapped_column(Text, nullable=True)
-    steps: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, default=list, nullable=False)
+    # Ordered practice steps (one instruction per item).
+    steps: Mapped[list[str]] = mapped_column(JSONB, default=list, nullable=False)
     duration_minutes: Mapped[int | None] = mapped_column(Integer, nullable=True)
     stop_conditions: Mapped[dict[str, Any] | None] = mapped_column(JSONB, nullable=True)
     next_module_id: Mapped[uuid.UUID | None] = mapped_column(

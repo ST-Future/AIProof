@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import admin, admin_inbox, admin_knowledge, auth, health
+from app.routers import admin, admin_inbox, admin_knowledge, admin_training, auth, health
 
 settings = get_settings()
 
@@ -33,6 +33,8 @@ app.include_router(auth.router)
 app.include_router(admin.router)
 app.include_router(admin_knowledge.router)
 app.include_router(admin_inbox.router)
+app.include_router(admin_training.stages_router)
+app.include_router(admin_training.modules_router)
 
 
 @app.get("/", tags=["root"])

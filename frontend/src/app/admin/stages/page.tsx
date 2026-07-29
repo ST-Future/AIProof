@@ -1,6 +1,5 @@
-import { SectionPlaceholder } from "@/components/admin/SectionPlaceholder";
-import { getSection } from "@/components/admin/sections";
+import { StageManager } from "@/components/admin/training/StageManager";
 
 export default function Page() {
-  return <SectionPlaceholder section={getSection("stages")} />;
+  return <StageManager />;
 }

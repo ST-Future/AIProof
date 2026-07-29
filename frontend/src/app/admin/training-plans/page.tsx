@@ -1,6 +1,5 @@
-import { SectionPlaceholder } from "@/components/admin/SectionPlaceholder";
-import { getSection } from "@/components/admin/sections";
+import { ModuleManager } from "@/components/admin/training/ModuleManager";
 
 export default function Page() {
-  return <SectionPlaceholder section={getSection("training-plans")} />;
+  return <ModuleManager />;
 }
