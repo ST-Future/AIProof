@@ -1,6 +1,5 @@
-import { SectionPlaceholder } from "@/components/admin/SectionPlaceholder";
-import { getSection } from "@/components/admin/sections";
+import { CustomerManager } from "@/components/admin/CustomerManager";
 
 export default function Page() {
-  return <SectionPlaceholder section={getSection("customers")} />;
+  return <CustomerManager />;
 }

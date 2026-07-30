@@ -11,6 +11,7 @@ import {
   getAssessment,
   submitAssessment,
 } from "@/lib/assessment";
+import { type Profile, getProfile } from "@/lib/profile";
 
 type SingleKey = "experience" | "stress_level" | "sleep_quality" | "energy_level";
 
@@ -83,6 +84,7 @@ export default function AssessmentPage() {
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   // Redirect anonymous visitors to sign in.
   useEffect(() => {
@@ -95,7 +97,7 @@ export default function AssessmentPage() {
     let active = true;
     void (async () => {
       try {
-        const existing = await getAssessment();
+        const [existing, existingProfile] = await Promise.all([getAssessment(), getProfile()]);
         if (active && existing) {
           const a = existing.answers;
           setSingle({
@@ -108,6 +110,7 @@ export default function AssessmentPage() {
           setMinutes(a.minutes_per_day);
           setNotes(a.notes ?? "");
         }
+        if (active) setProfile(existingProfile);
       } catch {
         /* first-time users have none; ignore */
       } finally {
@@ -136,6 +139,7 @@ export default function AssessmentPage() {
     } as unknown as AssessmentAnswers;
     try {
       await submitAssessment(payload);
+      setProfile(await getProfile());
       setSaved(true);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not save your answers");
@@ -158,6 +162,15 @@ export default function AssessmentPage() {
           and growth — not medical advice.
         </p>
       </div>
+
+      {profile?.summary && (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900 dark:bg-emerald-950">
+          <h2 className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">
+            Your Energy Profile
+          </h2>
+          <p className="mt-1 text-sm text-emerald-900 dark:text-emerald-100">{profile.summary}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-8">
         {SINGLE_QUESTIONS.map((q) => (

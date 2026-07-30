@@ -11,6 +11,7 @@ from app.models.assessment import BackgroundAssessment
 from app.models.user import User
 from app.schemas.assessment import AssessmentAnswers, AssessmentRead
 from app.services import assessment as svc
+from app.services import profile as profile_svc
 
 router = APIRouter(prefix="/api/assessment", tags=["assessment"])
 
@@ -30,5 +31,15 @@ async def submit_assessment(
     db: AsyncSession = Depends(get_db),
 ) -> BackgroundAssessment:
     item = await svc.upsert_assessment(db, user.id, payload.model_dump())
+
+    # Generate the Energy Profile and ensure a training state exist (idempotent).
+    summary, traits = profile_svc.generate_energy_profile(item.answers)
+    await profile_svc.upsert_energy_profile(
+        db, user.id, source_assessment_id=item.id, summary=summary, traits=traits
+    )
+    await profile_svc.initialize_training_state(
+        db, user.id, stage_key=profile_svc.starting_stage_key(item.answers)
+    )
+
     await db.commit()
     return item
