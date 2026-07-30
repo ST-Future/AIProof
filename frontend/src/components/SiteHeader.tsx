@@ -40,6 +40,12 @@ export function SiteHeader() {
                   Admin
                 </Link>
               )}
+              <Link
+                href="/assessment"
+                className="text-neutral-600 hover:underline dark:text-neutral-300"
+              >
+                Assessment
+              </Link>
               <span className="text-neutral-500">{user.display_name || user.role}</span>
               <button
                 onClick={handleLogout}
