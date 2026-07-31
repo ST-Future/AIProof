@@ -1,6 +1,5 @@
-import { SectionPlaceholder } from "@/components/admin/SectionPlaceholder";
-import { getSection } from "@/components/admin/sections";
+import { SalesTriggerManager } from "@/components/admin/SalesTriggerManager";
 
 export default function Page() {
-  return <SectionPlaceholder section={getSection("sales-triggers")} />;
+  return <SalesTriggerManager />;
 }

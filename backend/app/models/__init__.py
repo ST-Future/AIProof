@@ -11,7 +11,7 @@ from app.models.conversation import AgentRun, AiFeedback, Conversation, Message
 from app.models.knowledge import KnowledgeEmbedding, KnowledgeEntry, KnowledgeInboxItem
 from app.models.membership import Membership
 from app.models.payment import PaymentRecord
-from app.models.rules import AgentRule, PromptVersion, RiskRule, SalesTrigger
+from app.models.rules import AgentRule, BlockedClaim, PromptVersion, RiskRule, SalesTrigger
 from app.models.training import (
     TrainingModule,
     TrainingSession,
@@ -44,6 +44,7 @@ __all__ = [
     "SalesTrigger",
     "RiskRule",
     "PromptVersion",
+    "BlockedClaim",
     # conversation / logging
     "Conversation",
     "Message",

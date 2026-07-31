@@ -94,3 +94,14 @@ class PromptVersion(TimestampMixin, Base):
     # The currently published version for this key.
     is_active: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+
+class BlockedClaim(TimestampMixin, Base):
+    """A term the Agent must never use (e.g. medical claims like "cure")."""
+
+    __tablename__ = "blocked_claims"
+
+    id: Mapped[uuid.UUID] = uuid_pk()
+    term: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    note: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)

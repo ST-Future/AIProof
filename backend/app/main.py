@@ -15,6 +15,9 @@ from app.routers import (
     admin_customers,
     admin_inbox,
     admin_knowledge,
+    admin_risk,
+    admin_rules,
+    admin_sales,
     admin_training,
     assessment,
     auth,
@@ -45,6 +48,10 @@ app.include_router(admin_knowledge.router)
 app.include_router(admin_inbox.router)
 app.include_router(admin_training.stages_router)
 app.include_router(admin_training.modules_router)
+app.include_router(admin_rules.router)
+app.include_router(admin_sales.router)
+app.include_router(admin_risk.risk_router)
+app.include_router(admin_risk.claims_router)
 app.include_router(assessment.router)
 app.include_router(profile.router)
 app.include_router(admin_customers.router)
