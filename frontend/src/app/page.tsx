@@ -504,17 +504,20 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-neutral-200 py-10 dark:border-neutral-800">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-neutral-500 sm:flex-row">
-          <span className="flex items-center gap-2 font-semibold text-emerald-600 dark:text-neutral-300">
-            <Image
-              src="/mark.png"
-              alt="Great Energy Field logo"
-              width={32}
-              height={32}
-              unoptimized
-              className="h-8 w-8 object-contain"
-            />
+          <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo-mark.png"
+            alt=""
+            width={40}
+            height={40}
+            unoptimized
+            priority
+            className="h-9 w-9 object-contain"
+          />
+          <span className="text-lg font-semibold leading-none tracking-tight text-emerald-600">
             Great Energy Field
           </span>
+        </Link>
           <div className="flex gap-6">
             <Link href="#how-it-works" className="transition hover:text-emerald-600">
               How it works

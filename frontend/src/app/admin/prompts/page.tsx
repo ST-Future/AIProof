@@ -1,6 +1,5 @@
-import { SectionPlaceholder } from "@/components/admin/SectionPlaceholder";
-import { getSection } from "@/components/admin/sections";
+import { PromptManager } from "@/components/admin/PromptManager";
 
 export default function Page() {
-  return <SectionPlaceholder section={getSection("prompts")} />;
+  return <PromptManager />;
 }

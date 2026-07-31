@@ -18,17 +18,17 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/70 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/70">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-        <Link href="/" className="group flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/mark.png"
-            alt="Great Energy Field logo"
-            width={36}
-            height={36}
+            src="/logo-mark.png"
+            alt=""
+            width={40}
+            height={40}
             unoptimized
             priority
             className="h-9 w-9 object-contain"
           />
-          <span className="text-base font-semibold tracking-tight text-emerald-600 transition-colors group-hover:text-emerald-700">
+          <span className="text-lg font-semibold leading-none tracking-tight text-emerald-600">
             Great Energy Field
           </span>
         </Link>
