@@ -50,6 +50,16 @@ Alembic reads `DATABASE_URL_SYNC` (sync driver) from settings; the app uses `DAT
 python -m app.seed   # training stages, default system prompt, safety risk rules (idempotent)
 ```
 
+## RAG embeddings
+
+Publishing a knowledge entry auto-embeds it; unpublish/retire removes it from retrieval.
+Uses a deterministic local embedder by default (OpenAI via `AI_PROVIDER=openai` + `OPENAI_API_KEY`).
+To (re)embed all currently-published entries:
+
+```bash
+python -m app.backfill_embeddings
+```
+
 ## Create a founder/admin account
 
 ```bash

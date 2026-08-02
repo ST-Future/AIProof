@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     # CORS: comma-separated origins
     cors_origins: str = "http://localhost:3000"
 
+    # AI provider (embeddings now; chat generation in Week 4). Falls back to a
+    # deterministic local embedder when no OpenAI key is configured.
+    ai_provider: str = "openai"
+    openai_api_key: str = ""
+    anthropic_api_key: str = ""
+
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]

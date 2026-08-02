@@ -13,6 +13,7 @@ from app.models.enums import KnowledgeStatus
 from app.models.knowledge import KnowledgeEntry
 from app.models.user import User
 from app.schemas.knowledge import KnowledgeCreate, KnowledgeRead, KnowledgeUpdate
+from app.services import embeddings as emb_svc
 from app.services import knowledge as svc
 
 router = APIRouter(prefix="/api/admin/knowledge", tags=["admin:knowledge"])
@@ -83,6 +84,11 @@ async def _transition(
 ) -> KnowledgeEntry:
     entry = await _get_or_404(db, entry_id)
     entry = await svc.set_status(db, entry, new_status, admin_id=admin.id, action=action)
+    # Keep the RAG index in sync: publish (re)embeds; unpublish/retire removes it.
+    if new_status is KnowledgeStatus.published:
+        await emb_svc.embed_knowledge_entry(db, entry)
+    else:
+        await emb_svc.delete_entry_embeddings(db, entry.id)
     await db.commit()
     return entry
 
