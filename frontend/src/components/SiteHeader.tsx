@@ -3,16 +3,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { useAuth } from "@/components/AuthProvider";
+import { walletLink } from "@/lib/wallet";
 
 export function SiteHeader() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const [walletStatus, setWalletStatus] = useState<string | null>(null);
 
   function handleLogout() {
     logout();
     router.push("/");
+  }
+
+  async function handleLinkWallet() {
+    setWalletStatus("Linking…");
+    try {
+      await walletLink();
+      setWalletStatus("Wallet linked");
+    } catch (err) {
+      setWalletStatus(err instanceof Error ? err.message : "Link failed");
+    }
   }
 
   return (
@@ -46,6 +59,13 @@ export function SiteHeader() {
               >
                 Assessment
               </Link>
+              <button
+                onClick={handleLinkWallet}
+                title="Link a wallet to this account"
+                className="text-neutral-600 hover:underline dark:text-neutral-300"
+              >
+                {walletStatus ?? "Link wallet"}
+              </button>
               <span className="text-neutral-500">{user.display_name || user.role}</span>
               <button
                 onClick={handleLogout}

@@ -10,7 +10,7 @@ import { ApiError } from "@/lib/api";
 type Mode = "login" | "signup";
 
 export default function LoginPage() {
-  const { login, signup } = useAuth();
+  const { login, signup, loginWithWallet } = useAuth();
   const router = useRouter();
 
   const [mode, setMode] = useState<Mode>("login");
@@ -19,6 +19,12 @@ export default function LoginPage() {
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  function messageOf(err: unknown, fallback: string): string {
+    if (err instanceof ApiError) return err.message;
+    if (err instanceof Error) return err.message;
+    return fallback;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -31,7 +37,20 @@ export default function LoginPage() {
           : await signup(email, password, displayName || undefined);
       router.push(user.role === "admin" ? "/admin" : "/");
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Something went wrong");
+      setError(messageOf(err, "Something went wrong"));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleWallet() {
+    setError(null);
+    setBusy(true);
+    try {
+      const user = await loginWithWallet();
+      router.push(user.role === "admin" ? "/admin" : "/");
+    } catch (err) {
+      setError(messageOf(err, "Wallet sign-in failed"));
     } finally {
       setBusy(false);
     }
@@ -100,6 +119,21 @@ export default function LoginPage() {
           {busy ? "Please wait…" : mode === "login" ? "Sign in" : "Create account"}
         </button>
       </form>
+
+      <div className="flex items-center gap-3 text-xs text-neutral-400">
+        <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+        or
+        <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+      </div>
+
+      <button
+        type="button"
+        onClick={handleWallet}
+        disabled={busy}
+        className="rounded-full border border-neutral-300 px-6 py-2.5 text-sm font-medium transition hover:bg-neutral-100 disabled:opacity-60 dark:border-neutral-700 dark:hover:bg-neutral-900"
+      >
+        Continue with wallet
+      </button>
 
       <button
         type="button"

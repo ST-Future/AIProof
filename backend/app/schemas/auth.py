@@ -16,3 +16,18 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserRead
+
+
+class WalletNonceRequest(BaseModel):
+    address: str
+
+
+class WalletNonceResponse(BaseModel):
+    message: str
+    nonce_token: str
+
+
+class WalletVerifyRequest(BaseModel):
+    address: str
+    signature: str
+    nonce_token: str

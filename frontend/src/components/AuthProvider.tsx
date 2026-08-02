@@ -18,12 +18,14 @@ import {
   logout as apiLogout,
   signup as apiSignup,
 } from "@/lib/auth";
+import { walletLogin } from "@/lib/wallet";
 
 interface AuthContextValue {
   user: AuthUser | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<AuthUser>;
   signup: (email: string, password: string, displayName?: string) => Promise<AuthUser>;
+  loginWithWallet: () => Promise<AuthUser>;
   logout: () => void;
 }
 
@@ -68,14 +70,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const loginWithWallet = useCallback(async () => {
+    const u = await walletLogin();
+    setUser(u);
+    return u;
+  }, []);
+
   const logout = useCallback(() => {
     apiLogout();
     setUser(null);
   }, []);
 
   const value = useMemo(
-    () => ({ user, loading, login, signup, logout }),
-    [user, loading, login, signup, logout],
+    () => ({ user, loading, login, signup, loginWithWallet, logout }),
+    [user, loading, login, signup, loginWithWallet, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
